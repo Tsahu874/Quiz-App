@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav>
+    <button id="home-btn">Home</button>
+  </nav>
+
+  <div class="quiz-container">
+    <h1>Quiz</h1>
+    <h2 id="question">Loading question...</h2>
+    <div id="options-container"></div>
+    <button id="next-btn" disabled>Next</button>
+    <p id="score">Score: 0</p>
+  </div>
+
+  <!-- End of Quiz Options (Initially Hidden) -->
+  <div id="end-options" style="display: none;">
+    <h3>Quiz Completed! What do you want to do?</h3>
+    <button id="play-again-btn">Play Again</button>
+    <button id="go-home-btn">Go to Home</button>
+  </div>
+
+  <script src="quiz.js"></script>
+</body>
+</html>
