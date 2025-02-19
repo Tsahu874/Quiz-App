@@ -13,6 +13,8 @@ body {
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   }
+
+
   
   button {
     padding: 10px;
@@ -47,11 +49,11 @@ body {
   }
   
   .correct {
-    background-color: green !important;
+    background-color: #1f4132 !important;
   }
   
   .incorrect {
-    background-color: red !important;
+    background-color: #d77e7a !important;
   }
 
 #topic-select {
