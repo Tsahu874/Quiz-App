@@ -19,39 +19,48 @@ const homeBtn = document.getElementById("home-btn");
 
 // Main function to initialize quiz
 function main() {
-    // Redirect if no topic is selected
     if (!selectedTopic) {
         window.location.href = "index.html";
-        return;  // Stop execution if redirected
+        return;
     }
 
     // Clear quiz topic on page refresh
-    window.addEventListener("beforeunload", function () {
-        localStorage.removeItem("quizTopic");
-    });
+    window.addEventListener("beforeunload", () => localStorage.removeItem("quizTopic"));
 
-    // Fetch questions and set background
+    // Fetch questions
     fetchQuestions();
-    setRandomBackground();
 }
 
 // Fetch questions from API
-function fetchQuestions() {
-    fetch(`${apiUrl}?categories=${selectedTopic}&limit=10`)
-        .then((response) => response.json())
-        .then((data) => {
-            questions = data;
-            showQuestion();
-        })
-        .catch((error) => console.error("Error fetching questions:", error));
+async function fetchQuestions() {
+    try {
+        const response = await fetch(`${apiUrl}?categories=${selectedTopic}&limit=10`);
+        if (!response.ok) throw new Error("Failed to fetch questions.");
+        questions = await response.json();
+        showQuestion();
+    } catch (error) {
+        console.error("Error fetching questions:", error);
+        questionEl.innerHTML = "Failed to load questions. Please try again.";
+    }
 }
 
-// Fetch a random background image
-function setRandomBackground() {
-    const imageUrl = `https://source.unsplash.com/random/800x600?sig=${new Date().getTime()}`;
-    quizContainer.style.background = `url(${imageUrl})`;
-    quizContainer.style.backgroundSize = "cover";
-    quizContainer.style.backgroundPosition = "center";
+// Function to preload and set a random background image
+function preloadBackgroundImage() {
+    const imageUrl = `https://picsum.photos/1920/1080?random=${Date.now()}`;
+    const img = new Image();
+
+    img.src = imageUrl;
+    img.onload = () => {
+        document.body.style.backgroundImage = `url(${img.src})`;
+        document.body.style.backgroundSize = "cover";
+        document.body.style.backgroundRepeat = "no-repeat";
+        document.body.style.backgroundPosition = "center";
+        document.body.style.transition = "background 0.5s ease-in-out"; // Smooth transition
+    };
+
+    img.onerror = () => {
+        console.error("Failed to load background image.");
+    };
 }
 
 // Display the current question
@@ -63,6 +72,8 @@ function showQuestion() {
         endOptions.style.display = "block";
         return;
     }
+
+    preloadBackgroundImage(); // Ensure image is preloaded before applying
 
     let currentQuestion = questions[currentQuestionIndex];
     questionEl.innerHTML = currentQuestion.question.text;
@@ -117,11 +128,13 @@ playAgainBtn.addEventListener("click", () => {
     endOptions.style.display = "none";
     nextBtn.style.display = "inline-block";
     fetchQuestions();
-    setRandomBackground();
 });
 
 goHomeBtn.addEventListener("click", () => window.location.href = "index.html");
 
-// 🔥 Call main function to start the quiz
+// Set background on page load
+document.addEventListener("DOMContentLoaded", preloadBackgroundImage);
+
+// 🔥 Start the quiz
 main();
 
