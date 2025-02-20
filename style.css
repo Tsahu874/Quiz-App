@@ -1,9 +1,17 @@
-body {
-    font-family: Arial, sans-serif;
-    background: linear-gradient(to right, #05445e, #189ab4);
-    color: #b4f8c8;
-    text-align: center;
-  }
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  color: #0b5264;
+  text-align: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  display: flex;
+  flex-direction: column;
+}
+
   
   .container, .quiz-container {
     width: 50%;
@@ -58,5 +66,15 @@ body {
 
 #topic-select {
   background-color: #b1d4e0;
+  border-radius: 8px;
+  width: 200px;
+  height: 40px;
+  font-size: larger;
 }
+
+#score{
+  font-size: 30px;
+  font-weight: bold;
+}
+  
   
